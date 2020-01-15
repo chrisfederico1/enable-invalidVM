@@ -1,0 +1,40 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20200115155844
+Username: PANERABREAD\cfederico2
+RunAs User: PANERABREAD\cfederico2
+Machine: STLPC0GN5AF (Microsoft Windows NT 10.0.14393.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Process ID: 7976
+PSVersion: 5.1.14393.2828
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.2828
+BuildVersion: 10.0.14393.2828
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is .\fix-invalid-vmlogging.txt
+ INFO: You entered VM: blahblah
+
+
+INFO: Verifying VM is present and in invalid state
+PS C:\Users\cfederico2\Documents\PowerShellScripts\repair-invalidVM> TerminatingError(Get-VM): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: 1/15/2020 3:58:48 PM	Get-VM		VM with name 'blahblah' was not found using the specified filter(s).	"
+A Error occured. VM:
+
+Get-VM : 1/15/2020 3:58:48 PM	Get-VM		VM with name 'blahblah' was not found using the specified filter(s).
+At C:\Users\cfederico2\Documents\PowerShellScripts\repair-invalidVM\fix-invalidVM.ps1:53 char:19
++         $vmname = Get-VM -Name $Name -ErrorAction Stop | Add-Member - ...
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [Get-VM], VimException
+    + FullyQualifiedErrorId : Core_OutputHelper_WriteNotFoundError,VMware.VimAutomation.ViCore.Cmdlets.Commands.GetVM
+
+
+
+
+VM is invalid!. Gathering inforamtion...
+**********************
+Windows PowerShell transcript end
+End time: 20200115155848
+**********************
