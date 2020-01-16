@@ -1,3 +1,6 @@
+Function fix-invalidVM()
+{
+
 <#
 	.SYNOPSIS
     Fix invalid VM . This is specific to company.
@@ -46,30 +49,41 @@ Begin{
 	exit 
     }
 
-    # Present data to the user
-    write-host "INFO: Verifying VM is present and in invalid state"
     
-    try{
-        $vmname = Get-VM -Name $Name -ErrorAction Stop | Add-Member -MemberType ScriptProperty -Name 'VMXPath' -Value {$this.extensiondata.config.files.vmpathname} -Passthru -Force | Select-Object Name,VMHost,ResourcePoolId,FolderId,VMXPath
-        #$vmhost = get-VM -Name $vmname | select-object VMHost
-        #$vmresourcePool = Get-VM -Name $vmname | Select-Object ResourcePoolId
-        #$vmpath = Get-VM -Name $vmname | Add-Member -MemberType ScriptProperty -Name 'VMXPath' -Value {$this.extensiondata.config.files.vmpathname} -Passthru -Force | Select-Object VMXPath
-        $vmname
 
-    }
-    catch{
-
-        Write-Output "A Error occured. " "" $error[0] ""
-    }
-
-    # Enter 2 spaces 
-    "";""
-
-     write-host "VM is invalid!. Gathering inforamtion..." -ForegroundColor Green
+     
 }
 
 Process{
 
+    # Present data to the user
+    write-host "INFO: Verifying if VM is present and is in an invalid state...." -ForegroundColor Yellow
+    
+    try{
+        # Get view of VM
+        $vminfo = get-vm -name $Name -ErrorAction Stop| get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
+        
+        # Let user know VM is present
+        write-host "INFO: VM is present verifying connection state...."
+
+        if ($vminfo.ConnectionState -match "invalid")
+        {
+            write-host "INFO: VM is invalid" -ForegroundColor Green
+            write-host "INFO: Reloading VM...." -ForegroundColor Green
+            $vminfo = get-vm -name $Name | get-view | ForEach-Object {$_.reload()}
+        }
+        else{
+            write-host "INFO: VM is not invalid. Please run script again with VM that is in invalid state." -ForegroundColor Red
+            exit
+        }        
+    }
+    catch{
+
+        Write-Output "INFO:A Error occured. Cannot Find VM !" "" $error[0] ""
+    }
+
+    # Enter 2 spaces 
+    "";""
 
 }
 
@@ -77,5 +91,8 @@ Process{
 End{
 
 Stop-Transcript
+
+}
+
 
 }
