@@ -14,7 +14,7 @@ Function fix-invalidVM()
 	.Notes
 	NAME: fix-invalidVM.ps1
     AUTHOR: Chris Federico  
-	LASTEDIT: 01/15/2020
+	LASTEDIT: 01/16/2020
 	VERSION: 1.0
 	KEYWORDS: VMware, vSphere, ESXi, VM, Invalid
 
