@@ -69,6 +69,8 @@ Process{
         if ($vminfo.ConnectionState -match "invalid")
         {
             write-host "INFO: VM is invalid" -ForegroundColor Green
+            # Enter 2 spaces 
+            "";""
             write-host "INFO: Reloading VM...." -ForegroundColor Green
             $vminfo = get-vm -name $Name | foreach-object {get-view $_.reload()}
         }
