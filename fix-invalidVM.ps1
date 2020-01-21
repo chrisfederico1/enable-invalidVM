@@ -79,7 +79,7 @@ Process{
     }
     catch{
 
-        Write-Output "INFO:A Error occured. Cannot Find VM !" "" $error[0] ""
+        Write-Output "INFO:A Error occured." "" $error[0] ""
     }
 
     # Enter 2 spaces 
