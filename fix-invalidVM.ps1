@@ -70,7 +70,7 @@ Process{
         {
             write-host "INFO: VM is invalid" -ForegroundColor Green
             write-host "INFO: Reloading VM...." -ForegroundColor Green
-            $vminfo = get-vm -name $Name | get-view | ForEach-Object {$_.reload()}
+            $vminfo = get-vm -name $Name | foreach-object {get-view $_.reload()}
         }
         else{
             write-host "INFO: VM is not invalid. Please run script again with VM that is in invalid state." -ForegroundColor Red

@@ -1,11 +1,11 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20200115155844
+Start time: 20200120093453
 Username: PANERABREAD\cfederico2
 RunAs User: PANERABREAD\cfederico2
 Machine: STLPC0GN5AF (Microsoft Windows NT 10.0.14393.0)
-Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-Process ID: 7976
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command & 'c:\Users\cfederico2\.vscode\extensions\ms-vscode.powershell-2020.1.0\modules\PowerShellEditorServices\Start-EditorServices.ps1' -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2020.1.0' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\Users\cfederico2\.vscode\extensions\ms-vscode.powershell-2020.1.0\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\Users\cfederico2\.vscode\extensions\ms-vscode.powershell-2020.1.0\logs\1579533863-cb1e6794-8769-4962-bc5d-a641b31afdf61579533799915\EditorServices.log' -SessionDetailsPath 'c:\Users\cfederico2\.vscode\extensions\ms-vscode.powershell-2020.1.0\sessions\PSES-VSCode-948-752312' -FeatureFlags @()
+Process ID: 2416
 PSVersion: 5.1.14393.2828
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.14393.2828
@@ -16,25 +16,27 @@ PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 Transcript started, output file is .\fix-invalid-vmlogging.txt
- INFO: You entered VM: blahblah
+ INFO: You entered VM: S1-Gold02-AVMARPRX02
 
 
-INFO: Verifying VM is present and in invalid state
-PS C:\Users\cfederico2\Documents\PowerShellScripts\repair-invalidVM> TerminatingError(Get-VM): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: 1/15/2020 3:58:48 PM	Get-VM		VM with name 'blahblah' was not found using the specified filter(s).	"
-A Error occured. VM:
+INFO: Verifying if VM is present and is in an invalid state....
+INFO: VM is present verifying connection state....
+INFO: VM is invalid
+INFO: Reloading VM....
+PS>TerminatingError(ForEach-Object): "Exception calling "Reload" with "0" argument(s): "A general system error occurred: Invalid fault""
+INFO:A Error occured. Cannot Find VM !
 
-Get-VM : 1/15/2020 3:58:48 PM	Get-VM		VM with name 'blahblah' was not found using the specified filter(s).
-At C:\Users\cfederico2\Documents\PowerShellScripts\repair-invalidVM\fix-invalidVM.ps1:53 char:19
-+         $vmname = Get-VM -Name $Name -ErrorAction Stop | Add-Member - ...
-+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (:) [Get-VM], VimException
-    + FullyQualifiedErrorId : Core_OutputHelper_WriteNotFoundError,VMware.VimAutomation.ViCore.Cmdlets.Commands.GetVM
+Exception calling "Reload" with "0" argument(s): "A general system error occurred: Invalid fault"
+At C:\Users\cfederico2\Documents\PowerShellScripts\repair-invalidVM\fix-invalidVM.ps1:73 char:71
++ ... vminfo = get-vm -name $Name | get-view | ForEach-Object {$_.reload()}
++                                                              ~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : VimException
 
 
 
 
-VM is invalid!. Gathering inforamtion...
 **********************
 Windows PowerShell transcript end
-End time: 20200115155848
+End time: 20200120093501
 **********************
