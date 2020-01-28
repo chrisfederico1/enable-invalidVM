@@ -1,4 +1,4 @@
-Function fix-invalidVM()
+Function enable-invalidVM()
 {
 
 <#
