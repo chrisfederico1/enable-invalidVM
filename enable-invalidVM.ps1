@@ -25,7 +25,7 @@ Function enable-invalidVM()
 param
 (
     [Parameter(Mandatory=$true)]
-    [string]$Name
+    [string]$VMName
 )
 
 Begin{
@@ -37,7 +37,7 @@ Begin{
     Start-Transcript -path .\fix-invalid-vmlogging.txt
 
     # Give the user information on which VM they entered. 
-    write-host " INFO: You entered VM:" $Name -BackgroundColor Red
+    write-host " INFO: You entered VM:" $VMName -BackgroundColor Red
 
     # Enter 2 spaces 
     "";""
@@ -61,7 +61,7 @@ Process{
     
     try{
         # Get view of VM
-        $vminfo = get-vm -name $Name -ErrorAction Stop| get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
+        $vminfo = get-vm -name $VMName -ErrorAction Stop| get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
         
         # Let user know VM is present
         write-host "INFO: VM is present verifying connection state...."
@@ -72,7 +72,10 @@ Process{
             # Enter 2 spaces 
             "";""
             write-host "INFO: Reloading VM...." -ForegroundColor Green
-            $vminfo = get-vm -name $Name | foreach-object {get-view $_.reload()}
+            #$vminfo = get-vm -name $Name | foreach-object {get-view $_.reload()}
+            $Vmview = get-vm -name $VMName | Get-View
+            $Vmview.Reload()
+            
         }
         else{
             write-host "INFO: VM is not invalid. Please run script again with VM that is in invalid state." -ForegroundColor Red
