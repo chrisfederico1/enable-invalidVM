@@ -12,9 +12,9 @@ Function enable-invalidVM()
     fix-invalidVM -Name test
 	    
 	.Notes
-	NAME: fix-invalidVM.ps1
+	NAME: enable-invalidVM.ps1
     AUTHOR: Chris Federico  
-	LASTEDIT: 01/16/2020
+	LASTEDIT: 02/14/2020
 	VERSION: 1.0
 	KEYWORDS: VMware, vSphere, ESXi, VM, Invalid
 
@@ -34,7 +34,7 @@ Begin{
     Clear-host
 
     # Add start-transact here for logging
-    Start-Transcript -path .\fix-invalid-vmlogging.txt
+    Start-Transcript -path .\enable-invalid-vmlogging.txt
 
     # Give the user information on which VM they entered. 
     write-host " INFO: You entered VM:" $VMName -BackgroundColor Red
