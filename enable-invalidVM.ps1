@@ -93,7 +93,7 @@ Process{
             write-host "INFO: $VMName is located in folder...." $VMFolderID -ForegroundColor Yellow
             # Get Resource Pool ID
             $VMResourcePoolID = get-vm -Name $VMName | Select-Object -ExpandProperty ResourcePoolID
-            write-host "Info: $VMName is in Resource Pool...." $VMResourcePoolID -ForegroundColor Yellow
+            write-host "INFO: $VMName is in Resource Pool...." $VMResourcePoolID -ForegroundColor Yellow
 
             #******************Remove the VM from inventory*********************
 
