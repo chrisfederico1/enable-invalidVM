@@ -64,13 +64,12 @@ Process{
         $vminfo = get-vm -name $VMName -ErrorAction Stop | get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
         
         # Let user know VM is present
-        write-host "INFO: VM is present verifying connection state...."
+        write-host "INFO: VM is present verifying connection state...." -ForegroundColor Yellow
 
-        if ($vminfo.ConnectionState -match "invalid")
+        if ($vminfo.ConnectionState -match "connected")
         {
-            write-host "INFO: VM is invalid" -ForegroundColor Green
-            # Enter 2 spaces 
-            "";""
+            write-host "INFO: VM is invalid" -ForegroundColor Yellow
+                     
 
             #****** This section doesn't work . When trying to reload VM a general Error is observed
             #write-host "INFO: Reloading VM...." -ForegroundColor Green
@@ -78,17 +77,34 @@ Process{
             #$Vmview = get-vm -name $VMName | Get-View
             #$Vmview.Reload()
 
+
+            #***********Get Information about this VM so we can remove it from inventory and add it back in************
+
             # Get VM Path to .vmx file
-            write-host "INFO: Getting VMX path...."
+            write-host "INFO: Getting VMX path...." -ForegroundColor Yellow
             $vmxPath = get-vm -name $VMName | `
             add-member -MemberType ScriptProperty -Name 'VMXPath' -value {$this.extensiondata.config.files.vmpathname} -passthru -force | select-object Name,VMXPath
-            write-host "INFO: VMX Path...." $vmxPath.VMXPath
+            write-host "INFO: VMX Path...." $vmxPath.VMXPath -ForegroundColor Yellow
+            # Get VMHost the VM is on 
+            $VMHost = get-vm -name $VMName | Get-VMHost
+            write-host "INFO: $VMName is on Host...." $VMHost.Name -ForegroundColor Yellow
+            # Get Folder location ID
+            $VMFolderID = get-vm -Name $VMName | Select-Object -ExpandProperty FolderID
+            write-host "INFO: $VMName is located in folder...." $VMFolderID -ForegroundColor Yellow
+            # Get Resource Pool ID
+            $VMResourcePoolID = get-vm -Name $VMName | Select-Object -ExpandProperty ResourcePoolID
+            write-host "Info: $VMName is in Resource Pool...." $VMResourcePoolID -ForegroundColor Yellow
+
+            #******************Remove the VM from inventory*********************
+
+            #******************Add the VM back into inventory*******************
+            
 
 
         }
         else{
             write-host "INFO: VM is not invalid. Please run script again with VM that is in invalid state." -ForegroundColor Red
-            exit
+            
         }        
     }
     catch{
