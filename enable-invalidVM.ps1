@@ -66,7 +66,7 @@ Process{
         # Let user know VM is present
         write-host "INFO: VM is present verifying connection state...." -ForegroundColor Yellow
 
-        if ($vminfo.ConnectionState -match "connected")
+        if ($vminfo.ConnectionState -match "invalid")
         {
             write-host "INFO: VM is invalid" -ForegroundColor Yellow
                      
