@@ -61,7 +61,7 @@ Process{
     
     try{
         # Get view of VM
-        $vminfo = get-vm -name $VMName -ErrorAction Stop| get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
+        $vminfo = get-vm -name $VMName -ErrorAction Stop | get-view | Select-Object Name,@{N='ConnectionState';E={$_.runtime.connectionstate}}
         
         # Let user know VM is present
         write-host "INFO: VM is present verifying connection state...."
@@ -71,11 +71,20 @@ Process{
             write-host "INFO: VM is invalid" -ForegroundColor Green
             # Enter 2 spaces 
             "";""
-            write-host "INFO: Reloading VM...." -ForegroundColor Green
+
+            #****** This section doesn't work . When trying to reload VM a general Error is observed
+            #write-host "INFO: Reloading VM...." -ForegroundColor Green
             #$vminfo = get-vm -name $Name | foreach-object {get-view $_.reload()}
-            $Vmview = get-vm -name $VMName | Get-View
-            $Vmview.Reload()
-            
+            #$Vmview = get-vm -name $VMName | Get-View
+            #$Vmview.Reload()
+
+            # Get VM Path to .vmx file
+            write-host "INFO: Getting VMX path...."
+            $vmxPath = get-vm -name $VMName | `
+            add-member -MemberType ScriptProperty -Name 'VMXPath' -value {$this.extensiondata.config.files.vmpathname} -passthru -force | select-object Name,VMXPath
+            write-host "INFO: VMX Path...." $vmxPath.VMXPath
+
+
         }
         else{
             write-host "INFO: VM is not invalid. Please run script again with VM that is in invalid state." -ForegroundColor Red
