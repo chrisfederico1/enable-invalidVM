@@ -78,7 +78,7 @@ Process{
             #$Vmview.Reload()
 
 
-            #***********Get Information about this VM so we can remove it from inventory and add it back in************
+            #***********Get Information about VM so we can remove it from inventory and add it back in************
 
             # Get VM Path to .vmx file
             write-host "INFO: Getting VMX path...." -ForegroundColor Yellow
@@ -98,7 +98,7 @@ Process{
             #******************Remove the VM from inventory*********************
 
             #******************Add the VM back into inventory*******************
-            
+
 
 
         }
